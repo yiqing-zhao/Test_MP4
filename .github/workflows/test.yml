@@ -11,8 +11,6 @@ on:
     - cron: "0 22 * * *"
 
   pull_request:
-    types:
-      - opened
 
 jobs:
   setup:
