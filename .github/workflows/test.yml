@@ -14,12 +14,12 @@ on:
 
 jobs:
   setup:
-    if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'teamsfx-bot/TeamsFx')  }}
+    if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'  }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (dev)
-        if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'  }}
-        uses: actions/checkout@v3
+        run: |
+          echo ${{ github.event.pull_request.head.repo.full_name }}
 
 
   execute-case:
