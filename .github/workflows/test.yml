@@ -10,18 +10,25 @@ on:
   schedule:
     - cron: "0 22 * * *"
 
-  pull_request:
-    types:
-      - opened
+  pull_request_target:
 
 jobs:
   setup:
-    if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'teamsfx-bot/TeamsFx')  }}
+#     if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request_target' && github.event.pull_request_target.head.repo.full_name == 'teamsfx-bot/Test_MP4')  }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (dev)
-        if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'  }}
+        run: |
+          echo "setup"       
+          echo ${{github.event_name}}
+          echo ${{github.event.pull_request.head.repo.full_name}}
+          
+      - name: Checkout
         uses: actions/checkout@v3
+        
+      - name: secret
+        run: |
+          echo ${{ secrets.SUPERSECRET }}
 
 
   execute-case:
