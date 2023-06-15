@@ -10,11 +10,11 @@ on:
   schedule:
     - cron: "0 22 * * *"
 
-  pull_request:
+  pull_request_target:
 
 jobs:
   setup:
-    if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'teamsfx-bot/Test_MP4')  }}
+    if: ${{  github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request_target' && github.event.pull_request_target.head.repo.full_name == 'teamsfx-bot/Test_MP4')  }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (dev)
