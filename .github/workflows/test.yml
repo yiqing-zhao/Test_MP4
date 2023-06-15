@@ -19,7 +19,14 @@ jobs:
     steps:
       - name: Checkout (dev)
         run: |
-          echo "setup"
+          echo "setup"       
+          
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: secret
+        run: |
+          echo ${{ secrets.SUPERSECRET }}
 
 
   execute-case:
