@@ -1,0 +1,54 @@
+name: Teams JS SDK New Version Released
+on:
+  workflow_dispatch:
+
+jobs:
+  notification:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+
+    - name: Install npm packages
+      run: |
+        npm install node-fetch-commonjs
+        npm install markdown-it
+
+    - name: Get Release Detail
+      id: detail
+      uses: actions/github-script@v6
+      with:
+        script: |
+          var fetch = require('node-fetch-commonjs');
+          var md = require('markdown-it')();
+          const md_to_html = async() => {
+              const response = await fetch('https://api.github.com/repos/OfficeDev/microsoft-teams-library-js/releases/tags/v'+'2.0.0');
+              const data = await response.json();
+              const note = await data.body;
+              const url = await data.html_url;
+              console.log(note);
+              console.log("\nDetails can be found here: " + url);
+              const emailBody = note + "\n\nDetails can be found here: " + url;
+              emailBody_html = md.render(emailBody);
+              return emailBody_html;
+          }
+          return md_to_html();
+          
+    - name: Send mail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        # Specify connection via URL (replaces server_address, server_port, secure,
+        # username and password)
+        #
+        # Format:
+        #
+        #  * smtp://user:password@server:port
+        #  * smtp+starttls://user:password@server:port
+        connection_url: ${{secrets.MAIL_CONNECTION}}
+        secure: true
+        subject: Github Actions job result
+        to: yiqingzhao@microsoft.com
+        from: TeamsFx Bot
+        body: ${{ steps.detail.outputs.result }}
