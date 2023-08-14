@@ -47,10 +47,10 @@ jobs:
         #  * smtp://user:password@server:port
         #  * smtp+starttls://user:password@server:port
         # Required mail server address if not connection_url:
-        server_address: smtp.office365.com
-        server_port: 587
+        server_address: outlook.office365.com
+        server_port: 995
         # Optional whether this connection use TLS (default is true if server_port is 465)
-        secure: false
+        secure: true
         # Optional (recommended) mail server username:
         username: ${{secrets.MAIL_USERNAME}}
         # Optional (recommended) mail server password:
