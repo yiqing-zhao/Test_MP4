@@ -50,7 +50,7 @@ jobs:
         server_address: outlook.office365.com
         server_port: 995
         # Optional whether this connection use TLS (default is true if server_port is 465)
-        secure: true
+        secure: false
         # Optional (recommended) mail server username:
         username: ${{secrets.MAIL_USERNAME}}
         # Optional (recommended) mail server password:
